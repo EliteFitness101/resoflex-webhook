@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ResoFlex Analytics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  font-family: Arial;
+  background:#020617;
+  color:white;
+  padding:20px;
+}
+
+h2 {color:#22C55E;}
+
+.cards {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.card {
+  background:#1E293B;
+  padding:20px;
+  border-radius:10px;
+  flex:1;
+  min-width:150px;
+  text-align:center;
+}
+
+table {
+  width:100%;
+  margin-top:20px;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding:10px;
+  border-bottom:1px solid #333;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>📊 ResoFlex Revenue Dashboard</h2>
+
+<div class="cards">
+  <div class="card">
+    <h3 id="revenue">₦0</h3>
+    <p>Total Revenue</p>
+  </div>
+
+  <div class="card">
+    <h3 id="users">0</h3>
+    <p>Total Users</p>
+  </div>
+
+  <div class="card">
+    <h3 id="active">0</h3>
+    <p>Active Users</p>
+  </div>
+</div>
+
+<h3>📈 Recent Sales</h3>
+
+<table>
+<thead>
+<tr>
+<th>Email</th>
+<th>Plan</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="sales"></tbody>
+</table>
+
+<script>
+// Fetch analytics data
+fetch('/api/admin-analytics')
+.then(res=>res.json())
+.then(data=>{
+  
+  document.getElementById("revenue").innerHTML = "₦" + data.totalRevenue;
+  document.getElementById("users").innerHTML = data.totalUsers;
+  document.getElementById("active").innerHTML = data.activeUsers;
+
+  let html = '';
+  data.sales.forEach(sale=>{
+    html += `
+    <tr>
+      <td>${sale.email}</td>
+      <td>${sale.plan}</td>
+      <td>${new Date(sale.created_at).toLocaleString()}</td>
+    </tr>`;
+  });
+
+  document.getElementById("sales").innerHTML = html;
+});
+</script>
+
+</body>
+</html>
