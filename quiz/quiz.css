@@ -1,0 +1,22 @@
+body{
+  background:#0F172A;
+  color:#fff;
+  font-family:sans-serif;
+}
+
+.quiz-box{
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  background:rgba(30,41,59,0.7);
+  border-radius:16px;
+  text-align:center;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 20px;
+  background:#22C55E;
+  border:none;
+  border-radius:10px;
+}
