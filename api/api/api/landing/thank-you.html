@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResoFlex™ – Thank You!</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+<style>
+body{margin:0;font-family:'Poppins',sans-serif;background:#0F172A;color:#fff;}
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;
+backdrop-filter: blur(12px);background: rgba(30,41,59,0.7); border-radius:16px; padding:60px 20px; margin:40px auto; max-width:900px;}
+.hero h1{font-size:3rem;color:#FFD700;}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:40px; width:100%;}
+.grid a{padding:20px; background:#1E293B; border-radius:12px; text-decoration:none; color:#22C55E; text-align:center; font-weight:bold; font-size:1.2rem;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>🎉 Payment Successful!</h1>
+  <p>Your ResoFlex system is ready. Access your content below:</p>
+  <div class="grid" id="delivery-grid">
+    <a href="#" id="meal-link" target="_blank">Meal Plan PDF</a>
+    <a href="#" id="workout-link" target="_blank">Workout Generator</a>
+    <a href="https://youtube.com/@resonancefitness?si=xyL2VolWthJ_UK9F" target="_blank">Video Playlist</a>
+    <a href="https://audiomack.com/itcampuz/album/new-level-unlocked?share-user-id=29629087" target="_blank">Music Album</a>
+  </div>
+  <p style="margin-top:20px;">Share your transformation with B2K AI Bot on WhatsApp / Telegram!</p>
+</div>
+
+<script>
+// URL params
+const params = new URLSearchParams(window.location.search);
+const email = params.get('email') || '';
+const name = params.get('name') || 'User';
+const ref = params.get('ref') || '';
+
+// Temporary 24h links with anti-sharing token
+function tempLink(file){
+  let token = Math.random().toString(36).substr(2,8);
+  return `/temp/${file}?user=${email}&ref=${ref}&token=${token}`;
+}
+
+document.getElementById('meal-link').href = tempLink('naijameal.pdf');
+document.getElementById('workout-link').href = tempLink('workout-generator.html');
+
+// Log access
+fetch(`/api/log-access?email=${email}&ref=${ref}`);
+</script>
+</body>
+</html>
