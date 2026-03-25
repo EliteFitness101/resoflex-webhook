@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResoFlex Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+
+</head>
+<body>
+
+<div class="container">
+
+  <h1>👑 ResoFlex Dashboard</h1>
+
+  <!-- USER INFO -->
+  <div class="card">
+    <h3 id="welcome">Welcome</h3>
+    <p id="user-goal"></p>
+    <p id="user-plan"></p>
+  </div>
+
+  <!-- AI COACH -->
+  <div class="card">
+    <h3>🤖 B2K AI Coach</h3>
+    <div id="chat-box"></div>
+    <input id="msg" placeholder="Ask coach..." />
+    <button onclick="send()">Send</button>
+  </div>
+
+  <!-- GENERATORS -->
+  <div class="card">
+    <h3>⚡ AI Tools</h3>
+    <button onclick="getWorkout()">Workout Plan</button>
+    <button onclick="getMeal()">Meal Plan</button>
+    <div id="output"></div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="card">
+    <h3>📊 Progress Tracker</h3>
+    <input id="weight" placeholder="Weight" />
+    <input id="waist" placeholder="Waist" />
+    <input id="glutes" placeholder="Glutes" />
+    <button onclick="saveProgress()">Save</button>
+  </div>
+
+  <!-- REFERRALS -->
+  <div class="card">
+    <h3>💸 Referrals</h3>
+    <input id="refLink" readonly />
+    <p id="earnings"></p>
+  </div>
+
+  <!-- UPGRADE -->
+  <div class="card">
+    <h3>💎 Upgrade</h3>
+    <button onclick="payVIP()">Unlock VIP</button>
+  </div>
+
+</div>
+
+</body>
+</html>
