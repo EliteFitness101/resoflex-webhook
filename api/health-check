@@ -1,0 +1,93 @@
+// ==============================
+// ResoFlex™ FULL SYSTEM TEST
+// ==============================
+
+const BASE_URL = "https://your-vercel-app.vercel.app"; // 🔥 CHANGE THIS
+const TEST_EMAIL = "test@resoflex.com";
+
+async function testEndpoint(name, url, body = {}) {
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+
+    console.log(`✅ ${name} OK`);
+    console.log(data);
+    console.log("------------");
+
+  } catch (err) {
+    console.error(`❌ ${name} FAILED`);
+    console.error(err);
+    console.log("------------");
+  }
+}
+
+// -----------------------------
+// RUN ALL TESTS
+// -----------------------------
+async function runTests() {
+
+  console.log("🚀 STARTING RESOFLEX SYSTEM CHECK...\n");
+
+  // 1️⃣ AI COACH
+  await testEndpoint(
+    "AI Coach",
+    `${BASE_URL}/api/ai-coach`,
+    { message: "Test message", userEmail: TEST_EMAIL }
+  );
+
+  // 2️⃣ MEAL PLAN
+  await testEndpoint(
+    "Meal Generator",
+    `${BASE_URL}/api/meal`,
+    { userEmail: TEST_EMAIL }
+  );
+
+  // 3️⃣ WORKOUT PLAN
+  await testEndpoint(
+    "Workout Generator",
+    `${BASE_URL}/api/workout`,
+    { userEmail: TEST_EMAIL }
+  );
+
+  // 4️⃣ STREAK UPDATE
+  await testEndpoint(
+    "Streak System",
+    `${BASE_URL}/api/update-streak`,
+    { userEmail: TEST_EMAIL, streak: 5 }
+  );
+
+  // 5️⃣ POINTS SYSTEM
+  await testEndpoint(
+    "Points System",
+    `${BASE_URL}/api/update-points`,
+    { userEmail: TEST_EMAIL, points: 100 }
+  );
+
+  // 6️⃣ LEADERBOARD
+  await testEndpoint(
+    "Leaderboard",
+    `${BASE_URL}/api/affiliate-data`,
+    {}
+  );
+
+  // 7️⃣ VIP CHECK
+  try {
+    const res = await fetch(`${BASE_URL}/api/check-vip?email=${TEST_EMAIL}`);
+    const data = await res.json();
+
+    console.log("✅ VIP Check OK");
+    console.log(data);
+    console.log("------------");
+  } catch (err) {
+    console.error("❌ VIP Check FAILED", err);
+  }
+
+  console.log("\n🎯 SYSTEM CHECK COMPLETE");
+}
+
+runTests();
