@@ -1,0 +1,117 @@
+<script>
+const password = prompt("Enter Admin Password:");
+if(password !== "B2K-ADMIN-ACCESS"){
+  document.body.innerHTML = "<h1>Access Denied</h1>";
+}
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResoFlex™ Admin</title>
+<style>
+body{margin:0;font-family:sans-serif;background:#0F172A;color:#fff;}
+.container{padding:20px;}
+.card{
+  background:rgba(30,41,59,0.7);
+  backdrop-filter:blur(12px);
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:20px;
+}
+h1{color:#22C55E;}
+table{width:100%;border-collapse:collapse;}
+td,th{padding:10px;border-bottom:1px solid #1E293B;}
+button{
+  background:#22C55E;color:#0F172A;border:none;
+  padding:8px 14px;border-radius:8px;cursor:pointer;
+}
+button.danger{background:#EF4444;color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>📊 ResoFlex Admin Dashboard</h1>
+
+  <div class="card">
+    <h3>💰 Revenue</h3>
+    <p id="revenue">₦0</p>
+  </div>
+
+  <div class="card">
+    <h3>👥 Users</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Plan</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="users"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>💸 Referrals</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Referrer</th>
+          <th>Referred</th>
+          <th>Commission</th>
+        </tr>
+      </thead>
+      <tbody id="referrals"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Fetch Dashboard Data
+fetch('/api/admin-data')
+.then(res=>res.json())
+.then(data=>{
+  document.getElementById('revenue').innerText = "₦" + data.revenue;
+
+  let usersHTML='';
+  data.users.forEach(u=>{
+    usersHTML += `
+      <tr>
+        <td>${u.email}</td>
+        <td>${u.plan}</td>
+        <td>${u.paid ? 'Active' : 'Revoked'}</td>
+        <td>
+          <button onclick="revoke('${u.email}')" class="danger">Revoke</button>
+        </td>
+      </tr>`;
+  });
+  document.getElementById('users').innerHTML = usersHTML;
+
+  let refHTML='';
+  data.referrals.forEach(r=>{
+    refHTML += `
+      <tr>
+        <td>${r.referrer}</td>
+        <td>${r.referred}</td>
+        <td>₦${r.commission}</td>
+      </tr>`;
+  });
+  document.getElementById('referrals').innerHTML = refHTML;
+});
+
+// Revoke Access
+function revoke(email){
+  fetch('/api/revoke',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({email})
+  }).then(()=>alert("Access revoked"));
+}
+</script>
+
+</body>
+</html>
