@@ -3,62 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ResoFlex™ – Industrial Body Architecture</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
-<style>
-body{margin:0;font-family:'Poppins',sans-serif;background:#0F172A;color:#fff;}
-.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;
-backdrop-filter: blur(12px);background: rgba(30,41,59,0.7); border-radius:16px; padding:60px 20px; margin:40px auto; max-width:900px;}
-.hero h1{font-size:3rem;color:#22C55E;}
-.hero p{font-size:1.2rem;margin:20px 0;}
-.cta-btn{padding:20px 40px;background:#22C55E;color:#0F172A;border:none;border-radius:12px;font-weight:bold;cursor:pointer;font-size:1.2rem;transition:0.3s;}
-.cta-btn:hover{opacity:0.8;}
-.countdown{margin-top:20px;font-size:1.5rem;color:#FFD700;}
-</style>
+<title>ResoFlex Elite | Premium Fitness</title>
+<link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-<div class="hero">
-  <h1 id="user-name">Welcome to ResoFlex™</h1>
-  <p>Transform your body in 60 days. Industrial Precision meets Ancestral Heritage.</p>
-  <button class="cta-btn" id="pay-btn">Unlock My Transformation</button>
-  <div class="countdown" id="countdown"></div>
-</div>
+  <header class="glass-card header">
+    <h1>ResoFlex Elite</h1>
+    <p>Transform Your Body & Mind with Personalized Meal & Workout Plans</p>
+    <a href="meal-plan.html" class="btn-primary">Start Your Meal Plan</a>
+    <a href="workout-generator.html" class="btn-secondary">Start Your Workout</a>
+  </header>
 
-<script>
-// AI Personalization via URL params
-const params = new URLSearchParams(window.location.search);
-const name = params.get('name') || '';
-if(name) document.getElementById('user-name').innerText = `Welcome, ${name} 👋`;
+  <section class="glass-card features">
+    <h2>Elite Features</h2>
+    <ul>
+      <li>AI Coach & Chatbot for Guidance</li>
+      <li>Personalized Meal & Workout Plans</li>
+      <li>Referral & Rewards System</li>
+      <li>Telegram & WhatsApp Integration</li>
+      <li>Daily Reminders & Streaks</li>
+    </ul>
+  </section>
 
-// Countdown Timer (24h)
-let countdownDate = new Date().getTime() + 24*60*60*1000;
-const countdownEl = document.getElementById('countdown');
-setInterval(() => {
-  let now = new Date().getTime();
-  let distance = countdownDate - now;
-  let hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-  let minutes = Math.floor((distance%(1000*60*60))/(1000*60));
-  let seconds = Math.floor((distance%(1000*60))/1000);
-  countdownEl.innerText = `Offer ends in ${hours}h ${minutes}m ${seconds}s`;
-},1000);
+  <section class="glass-card audiomack">
+    <h2>Workout Music</h2>
+    <iframe src="https://audiomack.com/embed/itcampuz/album/resoflex-velocity-volume-1" scrolling="no" width="100%" height="400" frameborder="0"></iframe>
+    <iframe src="https://audiomack.com/embed/itcampuz/album/new-level-unlocked" scrolling="no" width="100%" height="400" frameborder="0"></iframe>
+  </section>
 
-// Paystack Checkout
-document.getElementById('pay-btn').addEventListener('click', function(){
-  let handler = PaystackPop.setup({
-    key: 'YOUR_PAYSTACK_PUBLIC_KEY',
-    email: params.get('email') || 'user@example.com',
-    amount: 100000, // Naira * 100
-    currency: 'NGN',
-    ref: 'REF-'+Math.floor((Math.random() * 1000000000)+1),
-    callback: function(response){
-      window.location.href = `/thank-you?ref=${response.reference}&email=${params.get('email') || ''}&name=${params.get('name') || ''}`;
-    },
-    onClose: function(){ alert('Payment cancelled'); }
-  });
-  handler.openIframe();
-});
-</script>
-<script src="https://js.paystack.co/v1/inline.js"></script>
+  <footer class="glass-card footer">
+    <p>&copy; 2026 ResoFlex Elite. All rights reserved.</p>
+    <a href="bio.html">Connect With Us</a>
+  </footer>
 </body>
 </html>
