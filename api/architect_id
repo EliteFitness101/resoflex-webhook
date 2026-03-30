@@ -1,0 +1,38 @@
+/**
+ * RESOFLEX™ AFFILIATE ARCHITECT ENGINE
+ * Node: REF-76530788057
+ */
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
+
+export default async function handler(req, res) {
+    const { message } = req.body;
+
+    if (message && message.text.startsWith('/start ')) {
+        const architectId = message.text.split(' ')[1]; // Extract ARCH-101
+        const chatId = message.chat.id;
+
+        // 1. Bond the Lead to the Architect in the Vault
+        await supabase.from('rf_leads').upsert({
+            telegram_id: chatId,
+            name: message.from.first_name,
+            referred_by: architectId,
+            status: 'Referred'
+        });
+
+        // 2. Notify the Architect (High-Status Alert)
+        await notifyArchitect(architectId, message.from.first_name);
+
+        return res.status(200).send('Referral Bonded');
+    }
+
+    res.status(200).send('OK');
+}
+
+async function notifyArchitect(archId, leadName) {
+    // Logic to send a Telegram message to the Architect's saved ID
+    // "🏛️ NEW LEAD: ${leadName} has entered your architecture."
+}
+
